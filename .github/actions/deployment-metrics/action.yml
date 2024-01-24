@@ -39,7 +39,6 @@ runs:
       shell: bash
 
       run: |
-        export dd_site="datadoghq.eu"
         echo "app_name: ${{inputs.app_name}}"
         echo "app_version: ${{inputs.app_version}}"
         echo "deployment_start_date: ${{inputs.deployment_start_date}}"
@@ -49,7 +48,7 @@ runs:
         echo "sha: ${{inputs.sha}}"
         echo "repository: ${{inputs.repository}}"
       
-        curl -X POST "https://api.${{ dd_site }}/api/v2/dora/deployment" \
+        curl -X POST "https://api.datadoghq.eu/api/v2/dora/deployment" \
         -H "Accept: application/json" \
         -H "Content-Type: application/json" \
         -H "DD-API-KEY: ${{inputs.dd_api_key}}" \
