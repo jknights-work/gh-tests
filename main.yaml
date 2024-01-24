@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+  manual:
 
 jobs:
   prepare:
