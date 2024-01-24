@@ -22,17 +22,18 @@ inputs:
   dd-api-key:
     description: The Datadog API key.
     required: true
-env:
-    DATADOG_API_KEY: ${{ inputs.dd-api-key }}
-    APP_NAME: ${{ inputs.app-name }}
-    APP_VERSION: ${{ inputs.app-version }}
-    DEPLOYMENT_START_DATE: ${{ inputs.deployment-start-date }}
-    DEPLOYMENT_END_DATE: ${{ inputs.deployment-end-date }}
-    DEPLOYMENT_ENV: ${{ inputs.deployment-env }}
-    GIT_SHA: ${{ github.sha }}
-    GIT_REPOSITORY: ${{ github.repository }}
+
 
 runs:
+  env:
+      DATADOG_API_KEY: ${{ inputs.dd-api-key }}
+      APP_NAME: ${{ inputs.app-name }}
+      APP_VERSION: ${{ inputs.app-version }}
+      DEPLOYMENT_START_DATE: ${{ inputs.deployment-start-date }}
+      DEPLOYMENT_END_DATE: ${{ inputs.deployment-end-date }}
+      DEPLOYMENT_ENV: ${{ inputs.deployment-env }}
+      GIT_SHA: ${{ github.sha }}
+      GIT_REPOSITORY: ${{ github.repository }}
   using: composite
   steps:
     - name: deployment frequency
