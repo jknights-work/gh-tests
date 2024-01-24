@@ -19,7 +19,7 @@ inputs:
   deployment_env:
     description: The environment the app is being deployed to.
     required: true 
-  dd_api_ßkey:
+  dd_api_key:
     description: The Datadog API key.
     required: true
   sha:
@@ -36,11 +36,20 @@ runs:
 
     - name: deployment frequency
       id: deployment-frequency
+      with:
+        app_name: ${{inputs.app_name}}
+        app_version: ${{inputs.app_version}}
+        deployment_start_date: ${{inputs.deployment_start_date}}
+        deployment_end_date: ${{inputs.deployment_end_date}}
+        deployment_env: ${{inputs.deployment_env}}
+        dd_api_key: ${{inputs.dd_api_key}}
+        sha: ${{inputs.sha}}
+        repository: ${{inputs.repository}}
       shell: bash
       run: |
         export dd_site="datadoghq.eu"
         echo "DATADOG_API_KEY: $dd_api_key"
-        echo "APP_NAME: $app_name"
+        echo "APP_NAME: ${{app_name}}"
         echo "APP_VERSION: $app_version"
         echo "DEPLOYMENT_START_DATE: $deployment_start_date"
         echo "DEPLOYMENT_END_DATE: $deployment_end_date"

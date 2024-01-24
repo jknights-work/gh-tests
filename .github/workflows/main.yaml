@@ -34,4 +34,4 @@ jobs:
           deployment_env: "production"
           dd_api_key: ${{ secrets.DATADOG_API_KEY }}
           sha: ${{ github.sha }}
-          repo: ${{ github.repository }}
+          repository: ${{ github.repository }}
