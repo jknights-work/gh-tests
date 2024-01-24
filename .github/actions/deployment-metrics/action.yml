@@ -16,16 +16,19 @@ inputs:
   deployment-end-date:
     description: The end date of the deployment in ISO 8601 format.
     required: true
-  env:
+  deployment-env:
     description: The environment the app is being deployed to.
     required: true 
+  dd-api-key:
+    description: The Datadog API key.
+    required: true
 env:
-    DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
+    DATADOG_API_KEY: ${{ inputs.dd-api-key }}
     APP_NAME: ${{ inputs.app-name }}
     APP_VERSION: ${{ inputs.app-version }}
     DEPLOYMENT_START_DATE: ${{ inputs.deployment-start-date }}
     DEPLOYMENT_END_DATE: ${{ inputs.deployment-end-date }}
-    DEPLOY_ENV: ${{ inputs.env }}
+    DEPLOYMENT_ENV: ${{ inputs.deployment-env }}
     GIT_SHA: ${{ github.sha }}
     GIT_REPOSITORY: ${{ github.repository }}
 
@@ -71,7 +74,7 @@ runs:
                 "commit_sha": "${GIT_SHA}",
                 "repository_url": "${GIT_REPOSITORY}"
               },
-              "env": "${DEPLOY_ENV}"
+              "env": "${DEPLOYMENT_ENV}"
             }
           }
         }

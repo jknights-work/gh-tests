@@ -31,4 +31,5 @@ jobs:
           app-version: "1.0.0"
           deployment-start-date: ${{ steps.deployment-start-date.outputs.deployment-start-date }}
           deployment-end-date: ${{ steps.deployment-end-date.outputs.deployment-end-date }}
-          env: "production"
+          deployment-env: "production"
+          dd-api-key: ${{ secrets.DATADOG_API_KEY }}
