@@ -8,8 +8,8 @@ jobs:
   prepare:
     runs-on: ubuntu-latest
     outputs:
-      deployment-start-date: ${{ steps.deployment-start-date.outputs.deployment-start-date }}
-      deployment-end-date: ${{ steps.deployment-end-date.outputs.deployment-end-date }}
+      deployment-start-date: ${{ steps.deployment-start-date.outputs.deployment_start_date }}
+      deployment-end-date: ${{ steps.deployment-end-date.outputs.deployment_end_date }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -17,12 +17,12 @@ jobs:
       - name: Set deployment start date
         id: deployment-start-date
         run: |
-          echo "DEPLOYMENT_START_DATE=$(date +%s)" >> "$GITHUB_ENV"
+          echo "deployment_start_date=$(date +%s)" >> "$GITHUB_ENV"
 
       - name: Set deployment end date
         id: deployment-end-date
         run: |
-          echo "DEPLOYMENT_END_DATE=$(date +%s)" >> "$GITHUB_ENV"
+          echo "deployment_end_date=$(date +%s)" >> "$GITHUB_ENV"
       
       - name: Send deployment metrics
         uses: ./.github/actions/deployment-metrics
@@ -30,8 +30,8 @@ jobs:
         with:
           app_name: "my-app"
           app_version: "1.0.0"
-          deployment_start_date: ${{ steps.deployment-start-date.outputs.deployment-start-date }}
-          deployment_end_date: ${{ steps.deployment-end-date.outputs.deployment-end-date }}
+          deployment_start_date: ${{ steps.deployment-start-date.outputs.deployment_start_date }}
+          deployment_end_date: ${{ steps.deployment-end-date.outputs.deployment_end_date }}
           deployment_env: "production"
           dd_api_key: ${{ secrets.DATADOG_API_KEY }}
           sha: ${{ github.sha }}
