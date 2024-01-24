@@ -8,8 +8,8 @@ jobs:
   prepare:
     runs-on: ubuntu-latest
     outputs:
-      deployment-start-date: ${{ steps.deployment-start-date.outputs.deployment_start_date }}
-      deployment-end-date: ${{ steps.deployment-end-date.outputs.deployment_end_date }}
+      deployment_start_date: ${{ steps.deployment-start-date.outputs.deployment_start_date }}
+      deployment_end_date: ${{ steps.deployment-end-date.outputs.deployment_end_date }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -23,16 +23,23 @@ jobs:
         id: deployment-end-date
         run: |
           echo "deployment_end_date=$(date +%s)" >> "$GITHUB_ENV"
-      
-      - name: Send deployment metrics
-        uses: ./.github/actions/deployment-metrics
-      
-        with:
-          app_name: "my-app"
-          app_version: "1.0.0"
-          deployment_start_date: ${{ steps.deployment-start-date.outputs.deployment_start_date }}
-          deployment_end_date: ${{ steps.deployment-end-date.outputs.deployment_end_date }}
-          deployment_env: "production"
-          dd_api_key: ${{ secrets.DATADOG_API_KEY }}
-          sha: ${{ github.sha }}
-          repository: ${{ github.repository }}
+
+  deploy:
+      runs-on: ubuntu-latest
+      needs: prepare
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v2
+
+        - name: Send deployment metrics
+          uses: ./.github/actions/deployment-metrics
+        
+          with:
+            app_name: "my-app"
+            app_version: "1.0.0"
+            deployment_start_date: ${{ needs.prepare.outputs.deployment_start_date }}
+            deployment_end_date: ${{ needs.prepare.outputs.deployment_end_date }}
+            deployment_env: "production"
+            dd_api_key: ${{ secrets.DATADOG_API_KEY }}
+            sha: ${{ github.sha }}
+            repository: ${{ github.repository }}
