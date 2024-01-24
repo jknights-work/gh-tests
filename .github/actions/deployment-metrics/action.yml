@@ -36,6 +36,7 @@ runs:
 
     - name: deployment frequency
       id: deployment-frequency
+      shell: bash
       with:
         app_name: ${{inputs.app_name}}
         app_version: ${{inputs.app_version}}
@@ -45,7 +46,7 @@ runs:
         dd_api_key: ${{inputs.dd_api_key}}
         sha: ${{inputs.sha}}
         repository: ${{inputs.repository}}
-      shell: bash
+
       run: |
         export dd_site="datadoghq.eu"
         echo "DATADOG_API_KEY: $dd_api_key"
