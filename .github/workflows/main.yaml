@@ -17,12 +17,12 @@ jobs:
       - name: Set deployment start date
         id: deployment-start-date
         run: |
-          echo "deployment_start_date=$(date +%s)" >> "$GITHUB_ENV"
+          echo "deployment_start_date=$(date +%s)" >> "$GITHUB_OUTPUT"
 
       - name: Set deployment end date
         id: deployment-end-date
         run: |
-          echo "deployment_end_date=$(date +%s)" >> "$GITHUB_ENV"
+          echo "deployment_end_date=$(date +%s)" >> "$GITHUB_OUTPUT"
 
   deploy:
       runs-on: ubuntu-latest
