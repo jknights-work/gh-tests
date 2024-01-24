@@ -19,15 +19,15 @@ inputs:
   env:
     description: The environment the app is being deployed to.
     required: true 
-  env:
-      DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
-      APP_NAME: ${{ inputs.app-name }}
-      APP_VERSION: ${{ inputs.app-version }}
-      DEPLOYMENT_START_DATE: ${{ inputs.deployment-start-date }}
-      DEPLOYMENT_END_DATE: ${{ inputs.deployment-end-date }}
-      DEPLOY_ENV: ${{ inputs.env }}
-      GIT_SHA: ${{ github.sha }}
-      GIT_REPOSITORY: ${{ github.repository }}
+env:
+    DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
+    APP_NAME: ${{ inputs.app-name }}
+    APP_VERSION: ${{ inputs.app-version }}
+    DEPLOYMENT_START_DATE: ${{ inputs.deployment-start-date }}
+    DEPLOYMENT_END_DATE: ${{ inputs.deployment-end-date }}
+    DEPLOY_ENV: ${{ inputs.env }}
+    GIT_SHA: ${{ github.sha }}
+    GIT_REPOSITORY: ${{ github.repository }}
 
 runs:
   using: composite
