@@ -26,6 +26,7 @@ jobs:
       
       - name: Send deployment metrics
         uses: ./.github/actions/deployment-metrics
+      
         with:
           app_name: "my-app"
           app_version: "1.0.0"
