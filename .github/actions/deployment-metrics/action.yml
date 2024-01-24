@@ -37,44 +37,25 @@ runs:
     - name: deployment frequency
       id: deployment-frequency
       shell: bash
-      with:
-        app_name: ${{inputs.app_name}}
-        app_version: ${{inputs.app_version}}
-        deployment_start_date: ${{inputs.deployment_start_date}}
-        deployment_end_date: ${{inputs.deployment_end_date}}
-        deployment_env: ${{inputs.deployment_env}}
-        dd_api_key: ${{inputs.dd_api_key}}
-        sha: ${{inputs.sha}}
-        repository: ${{inputs.repository}}
 
       run: |
-        export dd_site="datadoghq.eu"
-        echo "DATADOG_API_KEY: $dd_api_key"
-        echo "APP_NAME: ${{app_name}}"
-        echo "APP_VERSION: $app_version"
-        echo "DEPLOYMENT_START_DATE: $deployment_start_date"
-        echo "DEPLOYMENT_END_DATE: $deployment_end_date"
-        echo "DEPLOYMENT_ENV: $deployment_env"
-        echo "GIT_SHA: $sha"
-        echo "GIT_REPOSITORY: $repository"
-       
-        curl -X POST "https://api.${dd_site}/api/v2/dora/deployment" \
+        curl -X POST "https://api.${{ inputs.dd_site }}/api/v2/dora/deployment" \
         -H "Accept: application/json" \
         -H "Content-Type: application/json" \
-        -H "DD-API-KEY: ${dd_api_key}" \
+        -H "DD-API-KEY: ${{inputs.dd_api_key}}" \
         -d @- << EOF
         {
           "data": {
             "attributes": {
-              "service": "${app_name}",
-              "version": "${app_version}",
-              "started_at": "${deployment_start_date}",
-              "finished_at": "${deployment_end_date}",
+              "service": "${{inputs.app_name}",
+              "version": "${{inputs.app_version}}",
+              "started_at": "${{inputs.deployment_start_date}}",
+              "finished_at": "${{inputs.deployment_end_date}}",
               "git": {
-                "commit_sha": "${sha}",
-                "repository_url": "${git_repository}"
+                "commit_sha": "${{inputs.sha}}",
+                "repository_url": "${{inputs.repository}}"
               },
-              "env": "${deployment_env}"
+              "env": "${{inputs.deployment_env}}"
             }
           }
         }
