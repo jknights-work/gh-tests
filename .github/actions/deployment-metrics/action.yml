@@ -4,22 +4,22 @@ description: |
   This requires organisational level secrets, such as DATADOG_API_KEY 
 
 inputs:
-  app-name:
+  app_name:
     description: The name of the app being deployed.
     required: true
-  app-version:
+  app_version:
     description: The version of the app being deployed.
     required: true
-  deployment-start-date:
+  deployment_start_date:
     description: The start date of the deployment in ISO 8601 format.
     required: true
-  deployment-end-date:
+  deployment_end_date:
     description: The end date of the deployment in ISO 8601 format.
     required: true
-  deployment-env:
+  deployment_env:
     description: The environment the app is being deployed to.
     required: true 
-  dd-api-key:
+  dd_api_ßkey:
     description: The Datadog API key.
     required: true
   sha:
@@ -31,57 +31,40 @@ inputs:
 
 
 runs:
-  env:
-      DATADOG_API_KEY: ${{ inputs.dd-api-key }}
-      APP_NAME: ${{ inputs.app-name }}
-      APP_VERSION: ${{ inputs.app-version }}
-      DEPLOYMENT_START_DATE: ${{ inputs.deployment-start-date }}
-      DEPLOYMENT_END_DATE: ${{ inputs.deployment-end-date }}
-      DEPLOYMENT_ENV: ${{ inputs.deployment-env }}
-      GIT_SHA: ${{ inputs.sha }}
-      GIT_REPOSITORY: ${{ inputs.repository }}
   using: composite
   steps:
+
     - name: deployment frequency
       id: deployment-frequency
       shell: bash
       run: |
-        export DD_SITE="datadoghq.eu"
-        echo "Inputs:"
-        echo "  app-name: ${{ inputs.app-name }}"
-        echo "  app-version: ${{ inputs.app-version }}"
-        echo "  deployment-start-date: ${{ inputs.deployment-start-date }}"
-        echo "  deployment-end-date: ${{ inputs.deployment-end-date }}"
-        echo "  env: ${{ inputs.env }}"
-        echo ""
-        echo "Environment Variables:"
-        echo "  DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}"
-        echo "  APP_NAME: ${{ inputs.app-name }}"
-        echo "  APP_VERSION: ${{ inputs.app-version }}"
-        echo "  DEPLOYMENT_START_DATE: ${{ inputs.deployment-start-date }}"
-        echo "  DEPLOYMENT_END_DATE: ${{ inputs.deployment-end-date }}"
-        echo "  ENV: ${{ inputs.env }}"
-        echo "  GIT_SHA: ${{ github.sha }}"
-        echo "  GIT_REPOSITORY: ${{ github.repository }}"
-        
-        
-        curl -X POST "https://api.${DD_SITE}/api/v2/dora/deployment" \
+        export dd_site="datadoghq.eu"
+        echo "DATADOG_API_KEY: $dd_api_key"
+        echo "APP_NAME: $app_name"
+        echo "APP_VERSION: $app_version"
+        echo "DEPLOYMENT_START_DATE: $deployment_start_date"
+        echo "DEPLOYMENT_END_DATE: $deployment_end_date"
+        echo "DEPLOYMENT_ENV: $deployment_env"
+        echo "GIT_SHA: $sha"
+        echo "GIT_REPOSITORY: $repository"
+       
+        curl -X POST "https://api.${dd_site}/api/v2/dora/deployment" \
         -H "Accept: application/json" \
         -H "Content-Type: application/json" \
-        -H "DD-API-KEY: ${DD_API_KEY}" \
+        -H "DD-API-KEY: ${dd_api_key}" \
         -d @- << EOF
         {
           "data": {
             "attributes": {
-              "service": "${APP_NAME}",
-              "version": "${APP_VERSION}",
-              "started_at": "${DEPLOYMENT_START_DATE}",
-              "finished_at": "${DEPLOYMENT_END_DATE}",
+              "service": "${app_name}",
+              "version": "${app_version}",
+              "started_at": "${deployment_start_date}",
+              "finished_at": "${deployment_end_date}",
               "git": {
-                "commit_sha": "${GIT_SHA}",
-                "repository_url": "${GIT_REPOSITORY}"
+                "commit_sha": "${sha}",
+                "repository_url": "${git_repository}"
               },
-              "env": "${DEPLOYMENT_ENV}"
+              "env": "${deployment_env}"
             }
           }
         }

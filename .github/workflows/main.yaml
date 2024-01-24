@@ -27,11 +27,11 @@ jobs:
       - name: Send deployment metrics
         uses: ./.github/actions/deployment-metrics
         with:
-          app-name: "my-app"
-          app-version: "1.0.0"
-          deployment-start-date: ${{ steps.deployment-start-date.outputs.deployment-start-date }}
-          deployment-end-date: ${{ steps.deployment-end-date.outputs.deployment-end-date }}
-          deployment-env: "production"
-          dd-api-key: ${{ secrets.DATADOG_API_KEY }}
+          app_name: "my-app"
+          app_version: "1.0.0"
+          deployment_start_date: ${{ steps.deployment-start-date.outputs.deployment-start-date }}
+          deployment_end_date: ${{ steps.deployment-end-date.outputs.deployment-end-date }}
+          deployment_env: "production"
+          dd_api_key: ${{ secrets.DATADOG_API_KEY }}
           sha: ${{ github.sha }}
           repo: ${{ github.repository }}
