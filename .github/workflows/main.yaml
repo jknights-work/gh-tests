@@ -11,6 +11,9 @@ jobs:
       deployment-start-date: ${{ steps.deployment-start-date.outputs.deployment-start-date }}
       deployment-end-date: ${{ steps.deployment-end-date.outputs.deployment-end-date }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Set deployment start date
         id: deployment-start-date
         run: |
