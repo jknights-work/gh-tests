@@ -33,3 +33,5 @@ jobs:
           deployment-end-date: ${{ steps.deployment-end-date.outputs.deployment-end-date }}
           deployment-env: "production"
           dd-api-key: ${{ secrets.DATADOG_API_KEY }}
+          sha: ${{ github.sha }}
+          repo: ${{ github.repository }}
