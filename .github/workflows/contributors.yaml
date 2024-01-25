@@ -39,11 +39,6 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
           content-filepath: ./contributors.md
           assignees: jamesrknights
-          
-  
-          #Set an environment variable with the date range
-          echo "START_DATE=$start_date" >> "$GITHUB_ENV"
-          echo "END_DATE=$end_date" >> "$GITHUB_ENV"
 
       - name: Run contributor action
         uses: github/contributors@v1
