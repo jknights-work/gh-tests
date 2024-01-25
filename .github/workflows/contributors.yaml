@@ -39,20 +39,5 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
           content-filepath: ./contributors.md
           assignees: jamesrknights
-
-      - name: Run contributor action
-        uses: github/contributors@v1
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          START_DATE: ${{ env.START_DATE }}
-          END_DATE: ${{ env.END_DATE }}
-          ORGANIZATION: jknights-work
-
-      - name: Create issue
-        uses: peter-evans/create-issue-from-file@v4
-        with:
-          title: Monthly contributor report
-          token: ${{ secrets.GH_TOKEN }}
-          content-filepath: ./contributors.md
-          assignees: jamesrknights
+          
     
