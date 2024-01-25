@@ -1,0 +1,22 @@
+name: Github API
+description: |
+  Query github api
+
+inputs:
+  gh_token:
+    description: Github token
+    required: true
+ 
+
+runs:
+  using: composite
+  steps:
+
+    - name: api call
+      id: gh-api
+      shell: bash
+      env: 
+        GH_TOKEN: ${{inputs.gh_token}}
+      run: |
+        gh api https://api.github.com/repos/octocat/Spoon-Knife/issues
+        
