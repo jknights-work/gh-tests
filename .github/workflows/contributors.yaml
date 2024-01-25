@@ -28,7 +28,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           START_DATE: ${{ env.START_DATE }}
           END_DATE: ${{ env.END_DATE }}
-          ORGANIZATION: CollinsonX
+          ORGANIZATION: narratones-work
 
       - name: Create issue
         uses: peter-evans/create-issue-from-file@v4
