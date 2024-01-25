@@ -1,8 +1,5 @@
 name: Contributors
-on:
-  push:
-    branches:
-      - main
+on: workflow_dispatch
 jobs:
   contributor_report:
     name: contributor report
@@ -39,5 +36,5 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
           content-filepath: ./contributors.md
           assignees: jamesrknights
-          
+
     
